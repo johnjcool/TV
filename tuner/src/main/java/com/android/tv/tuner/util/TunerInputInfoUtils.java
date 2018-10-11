@@ -29,6 +29,7 @@ import android.util.Pair;
 import com.android.tv.common.BaseApplication;
 import com.android.tv.common.BuildConfig;
 import com.android.tv.common.feature.CommonFeatures;
+import com.android.tv.common.util.SystemPropertiesProxy;
 import com.android.tv.tuner.R;
 import com.android.tv.tuner.TunerHal;
 

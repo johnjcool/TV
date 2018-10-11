@@ -76,7 +76,7 @@ public class TrickplayStorageManager implements BufferManager.StorageManager {
     }
 
     private void clearStorage() {
-        final long now = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
         if (sLastCacheCleanUpTask != null) {
             sLastCacheCleanUpTask.cancel(true);
         }

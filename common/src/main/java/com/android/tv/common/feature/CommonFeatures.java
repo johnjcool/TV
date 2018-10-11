@@ -17,13 +17,12 @@
 package com.android.tv.common.feature;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
 import com.android.tv.common.experiments.Experiments;
-import com.android.tv.common.util.CommonUtils;
 import com.android.tv.common.util.LocationUtils;
 
+import static com.android.tv.common.feature.EngOnlyFeature.ENG_ONLY_FEATURE;
 import static com.android.tv.common.feature.TestableFeature.createTestableFeature;
 
 /**
@@ -53,23 +52,6 @@ public class CommonFeatures {
     public static final Feature FORCE_RECORDING_UNTIL_NO_SPACE =
             PropertyFeature.create("force_recording_until_no_space", false);
 
-    public static final Feature TUNER =
-            new Feature() {
-                @Override
-                public boolean isEnabled(Context context) {
-
-                    if (CommonUtils.isDeveloper()) {
-                        // we enable tuner for developers to test tuner in any platform.
-                        return true;
-                    }
-
-                    // This is special handling just for USB Tuner.
-                    // It does not require any N API's but relies on a improvements in N for AC3
-                    // support
-                    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N;
-                }
-            };
-
     /** Show postal code fragment before channel scan. */
     public static final Feature ENABLE_CLOUD_EPG_REGION =
             new Feature() {
@@ -93,4 +75,8 @@ public class CommonFeatures {
                     return false;
                 }
             };
+
+    // TODO(b/74197177): remove when UI and API finalized.
+    /** Show channel signal strength. */
+    public static final Feature TUNER_SIGNAL_STRENGTH = ENG_ONLY_FEATURE;
 }

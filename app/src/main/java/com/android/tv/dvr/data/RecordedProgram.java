@@ -27,6 +27,7 @@ import android.media.tv.TvContract.RecordedPrograms;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import com.android.tv.common.R;
 import com.android.tv.common.TvContentRatingCache;
@@ -34,6 +35,7 @@ import com.android.tv.common.util.CommonUtils;
 import com.android.tv.data.BaseProgram;
 import com.android.tv.data.GenreItems;
 import com.android.tv.data.InternalDataUtils;
+import com.android.tv.util.TvProviderUtils;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -121,10 +123,18 @@ public class RecordedProgram extends BaseProgram {
         if (CommonUtils.isInBundledPackageSet(builder.mPackageName)) {
             InternalDataUtils.deserializeInternalProviderData(cursor.getBlob(index), builder);
         }
+        index++;
+        if (TvProviderUtils.getRecordedProgramHasSeriesIdColumn()) {
+            String seriesId = cursor.getString(index);
+            if (!TextUtils.isEmpty(seriesId)) {
+                builder.setSeriesId(seriesId);
+            }
+        }
         return builder.build();
     }
 
-    public static ContentValues toValues(RecordedProgram recordedProgram) {
+    @WorkerThread
+    public static ContentValues toValues(Context context, RecordedProgram recordedProgram) {
         ContentValues values = new ContentValues();
         if (recordedProgram.mId != ID_NOT_SET) {
             values.put(RecordedPrograms._ID, recordedProgram.mId);
@@ -188,6 +198,9 @@ public class RecordedProgram extends BaseProgram {
                 RecordedPrograms.COLUMN_INTERNAL_PROVIDER_FLAG4,
                 recordedProgram.mInternalProviderFlag4);
         values.put(RecordedPrograms.COLUMN_VERSION_NUMBER, recordedProgram.mVersionNumber);
+        if (TvProviderUtils.checkSeriesIdColumn(context, RecordedPrograms.CONTENT_URI)) {
+            values.put(COLUMN_SERIES_ID, recordedProgram.getSeriesId());
+        }
         return values;
     }
 
@@ -494,16 +507,12 @@ public class RecordedProgram extends BaseProgram {
     }
 
     public static final Comparator<RecordedProgram> START_TIME_THEN_ID_COMPARATOR =
-            new Comparator<RecordedProgram>() {
-                @Override
-                public int compare(RecordedProgram lhs, RecordedProgram rhs) {
-                    int res =
-                            Long.compare(lhs.getStartTimeUtcMillis(), rhs.getStartTimeUtcMillis());
-                    if (res != 0) {
-                        return res;
-                    }
-                    return Long.compare(lhs.mId, rhs.mId);
+            (RecordedProgram lhs, RecordedProgram rhs) -> {
+                int res = Long.compare(lhs.getStartTimeUtcMillis(), rhs.getStartTimeUtcMillis());
+                if (res != 0) {
+                    return res;
                 }
+                return Long.compare(lhs.mId, rhs.mId);
             };
 
     private static final long CLIPPED_THRESHOLD_MS = TimeUnit.MINUTES.toMillis(5);

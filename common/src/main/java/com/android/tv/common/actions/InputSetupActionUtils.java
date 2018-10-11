@@ -104,7 +104,7 @@ public class InputSetupActionUtils {
             return null;
         }
         Intent setupIntent = extras.getParcelable(EXTRA_SETUP_INTENT);
-        return setupIntent != null ? setupIntent : (Intent) extras.getParcelable(EXTRA_GOOGLE_SETUP_INTENT);
+        return setupIntent != null ? setupIntent : extras.getParcelable(EXTRA_GOOGLE_SETUP_INTENT);
     }
 
     @Nullable
@@ -116,7 +116,7 @@ public class InputSetupActionUtils {
         Intent setupIntent = extras.getParcelable(EXTRA_ACTIVITY_AFTER_COMPLETION);
         return setupIntent != null
                 ? setupIntent
-                : (Intent) extras.getParcelable(EXTRA_GOOGLE_ACTIVITY_AFTER_COMPLETION);
+                : extras.getParcelable(EXTRA_GOOGLE_ACTIVITY_AFTER_COMPLETION);
     }
 
     public static boolean hasInputSetupAction(Intent intent) {

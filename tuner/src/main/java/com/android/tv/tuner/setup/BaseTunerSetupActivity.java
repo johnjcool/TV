@@ -321,7 +321,7 @@ public class BaseTunerSetupActivity extends SetupActivity {
      * A callback to be invoked when the TvInputService is enabled or disabled.
      *
      * @param context a {@link Context} instance
-     * @param enabled {@code true} for the {@link com.android.tv.tuner.tvinput.BaseTunerTvInputService} to be enabled; otherwise
+     * @param enabled {@code true} for the {@link TunerTvInputService} to be enabled; otherwise
      *     {@code false}
      */
     public static void onTvInputEnabled(Context context, boolean enabled, Integer tunerType) {

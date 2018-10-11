@@ -26,7 +26,7 @@ public abstract class RemoteConfigValue<T> {
     }
 
     /** Create with the given key and default value */
-    public static RemoteConfigValue<Long> create(final String key, final long defaultValue) {
+    public static RemoteConfigValue<Long> create(String key, long defaultValue) {
         return new RemoteConfigValue<Long>(key, defaultValue) {
             @Override
             public Long get(RemoteConfig remoteConfig) {

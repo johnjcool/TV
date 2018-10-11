@@ -79,6 +79,8 @@ public class DvrDatabaseHelper extends SQLiteOpenHelper {
                     + " TEXT,"
                     + Schedules.COLUMN_STATE
                     + " TEXT NOT NULL,"
+                    + Schedules.COLUMN_FAILED_REASON
+                    + " TEXT,"
                     + Schedules.COLUMN_SERIES_RECORDING_ID
                     + " INTEGER,"
                     + "FOREIGN KEY("
@@ -162,7 +164,7 @@ public class DvrDatabaseHelper extends SQLiteOpenHelper {
                 new ColumnInfo(Schedules.COLUMN_PROGRAM_POST_ART_URI, SQL_DATA_TYPE_STRING),
                 new ColumnInfo(Schedules.COLUMN_PROGRAM_THUMBNAIL_URI, SQL_DATA_TYPE_STRING),
                 new ColumnInfo(Schedules.COLUMN_STATE, SQL_DATA_TYPE_STRING),
-                //new ColumnInfo(Schedules.COLUMN_FAILED_REASON, SQL_DATA_TYPE_STRING),
+                new ColumnInfo(Schedules.COLUMN_FAILED_REASON, SQL_DATA_TYPE_STRING),
                 new ColumnInfo(Schedules.COLUMN_SERIES_RECORDING_ID, SQL_DATA_TYPE_LONG)
             };
 
@@ -261,6 +263,7 @@ public class DvrDatabaseHelper extends SQLiteOpenHelper {
             if (DEBUG) Log.d(TAG, "Executing SQL: " + SQL_DROP_SERIES_RECORDINGS);
             db.execSQL(SQL_DROP_SERIES_RECORDINGS);
             onCreate(db);
+            return;
         }
         if (oldVersion < 18) {
             db.execSQL("ALTER TABLE " + Schedules.TABLE_NAME + " ADD COLUMN "

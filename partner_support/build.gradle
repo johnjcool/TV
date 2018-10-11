@@ -1,17 +1,39 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '28.0.2'
 
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 27
     }
+
+    buildTypes {
+        debug {
+            buildConfigField 'boolean', 'ENG', 'true'
+        }
+        release {
+            buildConfigField 'boolean', 'ENG', 'false'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:support-compat:27.1.1'
-    implementation 'com.android.support:support-annotations:27.1.1'
+    implementation 'com.android.support:support-compat:28.0.0'
+    implementation 'com.android.support:support-annotations:28.0.0'
+
+    implementation 'com.google.guava:guava:17.0'
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+    implementation 'com.google.truth:truth:0.36'
+
+
+    implementation 'com.google.auto.value:auto-value-annotations:1.6.2'
+    annotationProcessor 'com.google.auto.value:auto-value:1.6.2'
 }

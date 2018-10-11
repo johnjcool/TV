@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
-        applicationId "com.android.tv"
+        applicationId "com.google.android.tv"
         minSdkVersion 24
         targetSdkVersion 27
         versionCode 1
@@ -20,25 +20,35 @@ android {
         targetCompatibility = '1.8'
     }
 
-    sourceSets.main {
-        jniLibs.srcDir 'src/main/libs'
-        jni.srcDirs = []
+    sourceSets {
+        main {
+            jniLibs.srcDir 'src/main/libs'
+            jni.srcDirs = []
+            res.srcDirs += ['src/main/res', 'src/main/material_res']
+        }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support:support-compat:27.1.1'
-    implementation 'com.android.support:support-core-ui:27.1.1'
-    implementation 'com.android.support:leanback-v17:27.1.1'
-    implementation 'com.android.support:preference-leanback-v17:27.1.1'
-    implementation 'com.android.support:support-tv-provider:27.1.1'
-    implementation 'com.android.support:support-annotations:27.1.1'
-    implementation 'com.android.support:palette-v7:27.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:support-compat:28.0.0'
+    implementation 'com.android.support:support-core-ui:28.0.0'
+    implementation 'com.android.support:leanback-v17:28.0.0'
+    implementation 'com.android.support:preference-leanback-v17:28.0.0'
+    implementation 'com.android.support:support-tv-provider:28.0.0'
+    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'com.android.support:palette-v7:28.0.0'
 
     implementation 'javax.inject:javax.inject:1'
+
+    implementation 'com.google.guava:guava:17.0'
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+    implementation 'com.google.truth:truth:0.36'
+
+    implementation 'com.google.auto.value:auto-value-annotations:1.6.2'
+    annotationProcessor 'com.google.auto.value:auto-value:1.6.2'
 
     api project(':common')
     api project(':partner_support')

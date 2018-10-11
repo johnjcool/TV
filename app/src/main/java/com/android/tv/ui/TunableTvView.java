@@ -20,11 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ApplicationErrorReport;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -38,7 +34,6 @@ import android.media.tv.TvInputManager;
 import android.media.tv.TvTrackInfo;
 import android.media.tv.TvView;
 import android.media.tv.TvView.OnUnhandledInputEventListener;
-import android.media.tv.TvView.TvInputCallback;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -47,6 +42,7 @@ import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
@@ -55,6 +51,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import com.android.tv.InputSessionManager;
@@ -63,8 +60,9 @@ import com.google.android.tv.R;
 import com.android.tv.TvFeatures;
 import com.android.tv.TvSingletons;
 import com.android.tv.analytics.Tracker;
-import com.android.tv.common.BuildConfig;
 import com.android.tv.common.CommonConstants;
+import com.android.tv.common.compat.TvInputConstantCompat;
+import com.android.tv.common.compat.TvViewCompat.TvInputCallbackCompat;
 import com.android.tv.common.feature.CommonFeatures;
 import com.android.tv.common.util.CommonUtils;
 import com.android.tv.common.util.Debug;
@@ -95,8 +93,7 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
     public static final int VIDEO_UNAVAILABLE_REASON_NO_RESOURCE = -2;
     public static final int VIDEO_UNAVAILABLE_REASON_SCREEN_BLOCKED = -3;
     public static final int VIDEO_UNAVAILABLE_REASON_NONE = -100;
-
-    private OnTalkBackDpadKeyListener mOnTalkBackDpadKeyListener;
+    private final AccessibilityManager mAccessibilityManager;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({BLOCK_SCREEN_TYPE_NO_UI, BLOCK_SCREEN_TYPE_SHRUNKEN_TV_VIEW, BLOCK_SCREEN_TYPE_NORMAL})
@@ -132,7 +129,7 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
 
     private AppLayerTvView mTvView;
     private TvViewSession mTvViewSession;
-    private Channel mCurrentChannel;
+    @Nullable private Channel mCurrentChannel;
     private TvInputManagerHelper mInputManagerHelper;
     private ContentRatingsManager mContentRatingsManager;
     private ParentalControlSettings mParentalControlSettings;
@@ -190,8 +187,10 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
     private final ConnectivityManager mConnectivityManager;
     private final InputSessionManager mInputSessionManager;
 
-    private final TvInputCallback mCallback =
-            new TvInputCallback() {
+    private int mChannelSignalStrength;
+
+    private final TvInputCallbackCompat mCallback =
+            new TvInputCallbackCompat() {
                 @Override
                 public void onConnectionFailed(String inputId) {
                     Log.w(TAG, "Failed to bind an input");
@@ -252,7 +251,7 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                         }
                     }
                     if (mOnTuneListener != null) {
-                        mOnTuneListener.onStreamInfoChanged(TunableTvView.this);
+                        mOnTuneListener.onStreamInfoChanged(TunableTvView.this, true);
                     }
                 }
 
@@ -305,7 +304,10 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                         }
                     }
                     if (mOnTuneListener != null) {
-                        mOnTuneListener.onStreamInfoChanged(TunableTvView.this);
+                        // should not change audio track automatically when an audio track or a
+                        // subtitle track is selected
+                        mOnTuneListener.onStreamInfoChanged(
+                                TunableTvView.this, type == TvTrackInfo.TYPE_VIDEO);
                     }
                 }
 
@@ -316,58 +318,13 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                             .log(
                                     "Start up of Live TV ends,"
                                             + " TunableTvView.onVideoAvailable resets timer");
-                    long startUpDurationTime = Debug.getTimer(Debug.TAG_START_UP_TIMER).reset();
+                    Debug.getTimer(Debug.TAG_START_UP_TIMER).reset();
                     Debug.removeTimer(Debug.TAG_START_UP_TIMER);
-                    if (BuildConfig.ENG
-                            && startUpDurationTime > Debug.TIME_START_UP_DURATION_THRESHOLD) {
-                        showAlertDialogForLongStartUp();
-                    }
                     mVideoUnavailableReason = VIDEO_UNAVAILABLE_REASON_NONE;
                     updateBlockScreenAndMuting();
                     if (mOnTuneListener != null) {
-                        mOnTuneListener.onStreamInfoChanged(TunableTvView.this);
+                        mOnTuneListener.onStreamInfoChanged(TunableTvView.this, true);
                     }
-                }
-
-                private void showAlertDialogForLongStartUp() {
-                    new AlertDialog.Builder(getContext())
-                            .setTitle(getContext().getString(R.string.settings_send_feedback))
-                            .setMessage(
-                                    "Because the start up time of Live channels is too long,"
-                                            + " please send feedback")
-                            .setPositiveButton(
-                                    android.R.string.ok,
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(
-                                                DialogInterface dialogInterface, int i) {
-                                            Intent intent = new Intent(Intent.ACTION_APP_ERROR);
-                                            ApplicationErrorReport report =
-                                                    new ApplicationErrorReport();
-                                            report.packageName =
-                                                    report.processName =
-                                                            getContext()
-                                                                    .getApplicationContext()
-                                                                    .getPackageName();
-                                            report.time = System.currentTimeMillis();
-                                            report.type = ApplicationErrorReport.TYPE_CRASH;
-
-                                            // Add the crash info to add title of feedback
-                                            // automatically.
-                                            ApplicationErrorReport.CrashInfo crash =
-                                                    new ApplicationErrorReport.CrashInfo();
-                                            crash.exceptionClassName =
-                                                    "Live TV start up takes long time";
-                                            crash.exceptionMessage =
-                                                    "The start up time of Live TV is too long";
-                                            report.crashInfo = crash;
-
-                                            intent.putExtra(Intent.EXTRA_BUG_REPORT, report);
-                                            getContext().startActivity(intent);
-                                        }
-                                    })
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .show();
                 }
 
                 @Override
@@ -390,7 +347,7 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                     }
                     updateBlockScreenAndMuting();
                     if (mOnTuneListener != null) {
-                        mOnTuneListener.onStreamInfoChanged(TunableTvView.this);
+                        mOnTuneListener.onStreamInfoChanged(TunableTvView.this, true);
                     }
                     switch (reason) {
                         case TvInputManager.VIDEO_UNAVAILABLE_REASON_UNKNOWN:
@@ -440,6 +397,12 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                     }
                     boolean available = status == TvInputManager.TIME_SHIFT_STATUS_AVAILABLE;
                     setTimeShiftAvailable(available);
+                }
+
+                @Override
+                public void onSignalStrength(String inputId, int value) {
+                    mChannelSignalStrength = value;
+                    mOnTuneListener.onChannelSignalStrength();
                 }
             };
 
@@ -502,35 +465,12 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                                 }
                             }
                         });
-        View placeholder = findViewById(R.id.placeholder);
-        placeholder.requestFocus();
-        findViewById(R.id.channel_up)
-                .setOnFocusChangeListener(
-                        (v, hasFocus) -> {
-                            if (hasFocus) {
-                                placeholder.requestFocus();
-                                if (mOnTalkBackDpadKeyListener != null) {
-                                    mOnTalkBackDpadKeyListener.onTalkBackDpadKey(
-                                            KeyEvent.KEYCODE_DPAD_UP);
-                                }
-                            }
-                        });
-        findViewById(R.id.channel_down)
-                .setOnFocusChangeListener(
-                        (v, hasFocus) -> {
-                            if (hasFocus) {
-                                placeholder.requestFocus();
-                                if (mOnTalkBackDpadKeyListener != null) {
-                                    mOnTalkBackDpadKeyListener.onTalkBackDpadKey(
-                                            KeyEvent.KEYCODE_DPAD_DOWN);
-                                }
-                            }
-                        });
+        mAccessibilityManager = context.getSystemService(AccessibilityManager.class);
     }
 
     public void initialize(
             ProgramDataManager programDataManager, TvInputManagerHelper tvInputManagerHelper) {
-        mTvView = (AppLayerTvView) findViewById(R.id.tv_view);
+        mTvView = findViewById(R.id.tv_view);
         mProgramDataManager = programDataManager;
         mInputManagerHelper = tvInputManagerHelper;
         mContentRatingsManager = tvInputManagerHelper.getContentRatingsManager();
@@ -619,6 +559,14 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
     /** Sets if the TunableTvView is under shrunken. */
     public void setIsUnderShrunken(boolean isUnderShrunken) {
         mIsUnderShrunken = isUnderShrunken;
+    }
+
+    public int getChannelSignalStrength() {
+        return mChannelSignalStrength;
+    }
+
+    public void resetChannelSignalStrength() {
+        mChannelSignalStrength = TvInputConstantCompat.SIGNAL_STRENGTH_NOT_USED;
     }
 
     @Override
@@ -714,12 +662,13 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
         }
         updateBlockScreenAndMuting();
         if (mOnTuneListener != null) {
-            mOnTuneListener.onStreamInfoChanged(this);
+            mOnTuneListener.onStreamInfoChanged(this, true);
         }
         return true;
     }
 
     @Override
+    @Nullable
     public Channel getCurrentChannel() {
         return mCurrentChannel;
     }
@@ -795,13 +744,15 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
 
         void onUnexpectedStop(Channel channel);
 
-        void onStreamInfoChanged(StreamInfo info);
+        void onStreamInfoChanged(StreamInfo info, boolean allowAutoSelectionOfTrack);
 
         void onChannelRetuned(Uri channel);
 
         void onContentBlocked();
 
         void onContentAllowed();
+
+        void onChannelSignalStrength();
     }
 
     public void unblockContent(TvContentRating rating) {
@@ -869,12 +820,13 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
         mTvView.setOnUnhandledInputEventListener(listener);
     }
 
-    public void setOnTalkBackDpadKeyListener(OnTalkBackDpadKeyListener listener) {
-        mOnTalkBackDpadKeyListener = listener;
-    }
-
     public void setClosedCaptionEnabled(boolean enabled) {
         mTvView.setCaptionEnabled(enabled);
+    }
+
+    @VisibleForTesting
+    public void setOnTuneListener(OnTuneListener listener) {
+        mOnTuneListener = listener;
     }
 
     public List<TvTrackInfo> getTracks(int type) {
@@ -1044,6 +996,7 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
         if (text != null) {
             mBlockScreenView.setInfoText(text);
         }
+        mBlockScreenView.setInfoTextClickable(mScreenBlocked && mParentControlEnabled);
     }
 
     /**
@@ -1053,6 +1006,8 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
     private String getBlockScreenText() {
         // TODO: add a test for this method
         Resources res = getResources();
+        boolean isA11y = mAccessibilityManager.isEnabled();
+
         if (mScreenBlocked && mParentControlEnabled) {
             switch (mBlockScreenType) {
                 case BLOCK_SCREEN_TYPE_NO_UI:
@@ -1060,7 +1015,10 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                     return "";
                 case BLOCK_SCREEN_TYPE_NORMAL:
                     if (mCanModifyParentalControls) {
-                        return res.getString(R.string.tvview_channel_locked);
+                        return res.getString(
+                                isA11y
+                                        ? R.string.tvview_channel_locked_talkback
+                                        : R.string.tvview_channel_locked);
                     } else {
                         return res.getString(R.string.tvview_channel_locked_no_permission);
                     }
@@ -1081,15 +1039,26 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                 case BLOCK_SCREEN_TYPE_NORMAL:
                     if (TextUtils.isEmpty(name)) {
                         if (mCanModifyParentalControls) {
-                            return res.getString(R.string.tvview_content_locked);
+                            return res.getString(
+                                    isA11y
+                                            ? R.string.tvview_content_locked_talkback
+                                            : R.string.tvview_content_locked);
                         } else {
                             return res.getString(R.string.tvview_content_locked_no_permission);
                         }
                     } else {
                         if (mCanModifyParentalControls) {
                             return name.equals(res.getString(R.string.unrated_rating_name))
-                                    ? res.getString(R.string.tvview_content_locked_unrated)
-                                    : res.getString(R.string.tvview_content_locked_format, name);
+                                    ? res.getString(
+                                            isA11y
+                                                    ? R.string
+                                                            .tvview_content_locked_unrated_talkback
+                                                    : R.string.tvview_content_locked_unrated)
+                                    : res.getString(
+                                            isA11y
+                                                    ? R.string.tvview_content_locked_format_talkback
+                                                    : R.string.tvview_content_locked_format,
+                                            name);
                         } else {
                             return name.equals(res.getString(R.string.unrated_rating_name))
                                     ? res.getString(
@@ -1237,20 +1206,11 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                 .setDuration(durationMillis)
                 .setInterpolator(interpolator)
                 .withStartAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                mFadeState = FADING_OUT;
-                                mActionAfterFade = actionAfterFade;
-                            }
+                        () -> {
+                            mFadeState = FADING_OUT;
+                            mActionAfterFade = actionAfterFade;
                         })
-                .withEndAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                mFadeState = FADED_OUT;
-                            }
-                        });
+                .withEndAction(() -> mFadeState = FADED_OUT);
     }
 
     /** Fade in this TunableTvView. Fade in by decreasing the dimming. */
@@ -1264,20 +1224,14 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                 .setDuration(durationMillis)
                 .setInterpolator(interpolator)
                 .withStartAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                mFadeState = FADING_IN;
-                                mActionAfterFade = actionAfterFade;
-                            }
+                        () -> {
+                            mFadeState = FADING_IN;
+                            mActionAfterFade = actionAfterFade;
                         })
                 .withEndAction(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                mFadeState = FADED_IN;
-                                mDimScreenView.setVisibility(View.GONE);
-                            }
+                        () -> {
+                            mFadeState = FADED_IN;
+                            mDimScreenView.setVisibility(View.GONE);
                         });
     }
 
@@ -1296,6 +1250,10 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
     @Override
     public void setTimeShiftListener(TimeShiftListener listener) {
         mTimeShiftListener = listener;
+    }
+
+    public void setBlockedInfoOnClickListener(@Nullable OnClickListener onClickListener) {
+        mBlockScreenView.setInfoTextOnClickListener(onClickListener);
     }
 
     private void setTimeShiftAvailable(boolean isTimeShiftAvailable) {
@@ -1444,12 +1402,6 @@ public class TunableTvView extends FrameLayout implements StreamInfo, TunableTvV
                 view.setBackgroundImage(drawablePosterArt);
             }
         };
-    }
-
-    /** Listens for dpad actions that are otherwise trapped by talkback */
-    public interface OnTalkBackDpadKeyListener {
-
-        void onTalkBackDpadKey(int keycode);
     }
 
     /** A listener which receives the notification when the screen is blocked/unblocked. */

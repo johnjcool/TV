@@ -17,7 +17,6 @@
 package com.android.tv;
 
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -87,16 +86,15 @@ public class TimeShiftManager {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(
-        flag = true,
-        value = {
-            TIME_SHIFT_ACTION_ID_PLAY,
-            TIME_SHIFT_ACTION_ID_PAUSE,
-            TIME_SHIFT_ACTION_ID_REWIND,
-            TIME_SHIFT_ACTION_ID_FAST_FORWARD,
-            TIME_SHIFT_ACTION_ID_JUMP_TO_PREVIOUS,
-            TIME_SHIFT_ACTION_ID_JUMP_TO_NEXT
-        }
-    )
+            flag = true,
+            value = {
+                TIME_SHIFT_ACTION_ID_PLAY,
+                TIME_SHIFT_ACTION_ID_PAUSE,
+                TIME_SHIFT_ACTION_ID_REWIND,
+                TIME_SHIFT_ACTION_ID_FAST_FORWARD,
+                TIME_SHIFT_ACTION_ID_JUMP_TO_PREVIOUS,
+                TIME_SHIFT_ACTION_ID_JUMP_TO_NEXT
+            })
     public @interface TimeShiftActionId {}
 
     public static final int TIME_SHIFT_ACTION_ID_PLAY = 1;
@@ -977,8 +975,7 @@ public class TimeShiftManager {
                 }
             }
             if (mChannel != null) {
-                mProgramLoadTask =
-                        new LoadProgramsForCurrentChannelTask(mContext.getContentResolver(), next);
+                mProgramLoadTask = new LoadProgramsForCurrentChannelTask(next);
                 mProgramLoadTask.executeOnDbThread();
             }
         }
@@ -1225,10 +1222,10 @@ public class TimeShiftManager {
         private class LoadProgramsForCurrentChannelTask
                 extends AsyncDbTask.LoadProgramsForChannelTask {
 
-            LoadProgramsForCurrentChannelTask(ContentResolver contentResolver, Range<Long> period) {
+            LoadProgramsForCurrentChannelTask(Range<Long> period) {
                 super(
                         TvSingletons.getSingletons(mContext).getDbExecutor(),
-                        contentResolver,
+                        mContext,
                         mChannel.getId(),
                         period);
             }
@@ -1309,13 +1306,7 @@ public class TimeShiftManager {
                     mProgramLoadTask = null;
                 }
                 // Need to post to handler, because the task is still running.
-                mHandler.post(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                startTaskIfNeeded();
-                            }
-                        });
+                mHandler.post(ProgramManager.this::startTaskIfNeeded);
             }
 
             boolean overlaps(Queue<Range<Long>> programLoadQueue) {

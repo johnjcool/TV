@@ -24,6 +24,7 @@ import android.media.tv.TvTrackInfo;
 import android.media.tv.TvView;
 import android.text.TextUtils;
 import android.util.Log;
+import com.android.tv.common.compat.TvViewCompat.TvInputCallbackCompat;
 import com.android.tv.dvr.data.RecordedProgram;
 import java.util.ArrayList;
 import java.util.List;
@@ -333,7 +334,8 @@ class DvrPlayer {
 
     /** Returns the audio tracks of the current playback. */
     public ArrayList<TvTrackInfo> getAudioTracks() {
-        return new ArrayList<>(mTvView.getTracks(TvTrackInfo.TYPE_AUDIO));
+        List<TvTrackInfo> tracks = mTvView.getTracks(TvTrackInfo.TYPE_AUDIO);
+        return tracks == null ? new ArrayList<>() : new ArrayList<>(tracks);
     }
 
     /** Returns the ID of the selected track of the given type. */
@@ -440,7 +442,7 @@ class DvrPlayer {
                     }
                 });
         mTvView.setCallback(
-                new TvView.TvInputCallback() {
+                new TvInputCallbackCompat() {
                     @Override
                     public void onTimeShiftStatusChanged(String inputId, int status) {
                         if (DEBUG) Log.d(TAG, "onTimeShiftStatusChanged:" + status);

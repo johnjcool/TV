@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.tv.TvContract;
+
 import com.android.tv.TvApplication;
 import com.android.tv.analytics.Analytics;
 import com.android.tv.analytics.StubAnalytics;
@@ -33,11 +34,15 @@ import com.android.tv.common.util.CommonUtils;
 import com.android.tv.data.epg.EpgReader;
 import com.android.tv.data.epg.StubEpgReader;
 import com.android.tv.perf.PerformanceMonitor;
-import com.android.tv.perf.StubPerformanceMonitor;
-import com.google.android.tv.tuner.tvinput.TunerTvInputService;
-import com.google.android.tv.livechannels.tunersetup.LiveChannelsTunerSetupActivity;
+import com.android.tv.perf.PerformanceMonitorManagerFactory;
+import com.android.tv.tunerinputcontroller.TunerInputController;
 import com.android.tv.util.account.AccountHelper;
 import com.android.tv.util.account.AccountHelperImpl;
+import com.google.android.tv.livechannels.tunersetup.LiveChannelsTunerSetupActivity;
+import com.google.android.tv.tuner.tvinput.TunerTvInputService;
+
+import com.google.common.base.Optional;
+
 import javax.inject.Provider;
 
 /** The top level application for Live TV. */
@@ -45,7 +50,10 @@ public class LiveChannelsApplication extends TvApplication {
     protected static final String TV_ACTIVITY_CLASS_NAME =
             CommonConstants.BASE_PACKAGE + ".TvActivity";
 
-    private final StubPerformanceMonitor performanceMonitor = new StubPerformanceMonitor();
+    static {
+        PERFORMANCE_MONITOR_MANAGER.getStartupMeasure().onAppClassLoaded();
+    }
+
     private final Provider<EpgReader> mEpgReaderProvider =
             new Provider<EpgReader>() {
 
@@ -55,12 +63,20 @@ public class LiveChannelsApplication extends TvApplication {
                 }
             };
 
+    private final Optional<TunerInputController> mOptionalTunerInputController = Optional.absent();
     private AccountHelper mAccountHelper;
     private Analytics mAnalytics;
     private Tracker mTracker;
     private String mEmbeddedInputId;
     private RemoteConfig mRemoteConfig;
     private ExperimentLoader mExperimentLoader;
+    private PerformanceMonitor mPerformanceMonitor;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        PERFORMANCE_MONITOR_MANAGER.getStartupMeasure().onAppCreate(this);
+    }
 
     /** Returns the {@link AccountHelperImpl}. */
     @Override
@@ -73,7 +89,10 @@ public class LiveChannelsApplication extends TvApplication {
 
     @Override
     public synchronized PerformanceMonitor getPerformanceMonitor() {
-        return performanceMonitor;
+        if (mPerformanceMonitor == null) {
+            mPerformanceMonitor = PerformanceMonitorManagerFactory.create().initialize(this);
+        }
+        return mPerformanceMonitor;
     }
 
     @Override
@@ -138,7 +157,7 @@ public class LiveChannelsApplication extends TvApplication {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public Optional<TunerInputController> getTunerInputController() {
+        return mOptionalTunerInputController;
     }
 }

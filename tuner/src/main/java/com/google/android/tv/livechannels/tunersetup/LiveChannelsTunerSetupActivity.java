@@ -19,6 +19,7 @@ package com.google.android.tv.livechannels.tunersetup;
 import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.view.KeyEvent;
+
 import com.android.tv.tuner.TunerHal;
 import com.android.tv.tuner.setup.BaseTunerSetupActivity;
 import com.android.tv.tuner.setup.ScanFragment;
