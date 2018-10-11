@@ -21,7 +21,7 @@ import android.os.Bundle;
 import android.support.v17.leanback.widget.Action;
 import android.support.v17.leanback.widget.OnActionClickedListener;
 import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.dvr.DvrManager;
 import com.android.tv.dvr.ui.DvrUiHelper;

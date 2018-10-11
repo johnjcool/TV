@@ -22,7 +22,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 public class CheckBoxItem extends CompoundButtonItem {
     private final boolean mLayoutForLargeDescription;

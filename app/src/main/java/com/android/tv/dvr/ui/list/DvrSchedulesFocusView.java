@@ -23,7 +23,7 @@ import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** A view used for focus in schedules list. */
 public class DvrSchedulesFocusView extends View {

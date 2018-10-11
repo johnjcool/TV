@@ -24,7 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.dialog.HalfSizedDialogFragment;
 import com.android.tv.dvr.ui.DvrConflictFragment.DvrChannelWatchConflictFragment;
 import com.android.tv.dvr.ui.DvrConflictFragment.DvrProgramConflictFragment;

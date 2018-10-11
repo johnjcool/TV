@@ -18,7 +18,7 @@ package com.android.tv.menu;
 
 import android.content.Context;
 import android.view.View;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.analytics.Tracker;
 import java.util.List;

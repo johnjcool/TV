@@ -22,7 +22,7 @@ import android.support.v17.leanback.app.DetailsFragment;
 import android.transition.Transition;
 import android.transition.Transition.TransitionListener;
 import android.view.View;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.Starter;
 import com.android.tv.dialog.PinDialogFragment;
 

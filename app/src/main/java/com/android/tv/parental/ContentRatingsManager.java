@@ -21,7 +21,7 @@ import android.media.tv.TvContentRating;
 import android.media.tv.TvContentRatingSystemInfo;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.parental.ContentRatingSystem.Rating;
 import com.android.tv.parental.ContentRatingSystem.SubRating;
 import com.android.tv.util.TvInputManagerHelper;

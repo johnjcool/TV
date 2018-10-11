@@ -19,7 +19,7 @@ package com.android.tv.dvr.ui.browse;
 import android.content.Context;
 import android.media.tv.TvInputManager;
 import android.text.TextUtils;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.dvr.DvrDataManager;
 import com.android.tv.dvr.DvrDataManager.RecordedProgramListener;

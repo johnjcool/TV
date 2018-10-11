@@ -17,7 +17,7 @@
 package com.android.tv.menu;
 
 import android.content.Context;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.menu.ItemListRowView.ItemListAdapter;
 
 /**

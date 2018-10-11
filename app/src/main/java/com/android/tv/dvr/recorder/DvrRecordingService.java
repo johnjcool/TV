@@ -31,7 +31,7 @@ import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import com.android.tv.InputSessionManager;
 import com.android.tv.InputSessionManager.OnRecordingSessionChangeListener;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.Starter;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;

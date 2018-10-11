@@ -20,7 +20,7 @@ import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v17.leanback.app.GuidedStepFragment;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.Starter;
 import com.android.tv.common.SoftPreconditions;
 

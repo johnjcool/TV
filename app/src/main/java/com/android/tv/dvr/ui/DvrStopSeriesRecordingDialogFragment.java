@@ -22,7 +22,7 @@ import android.support.v17.leanback.app.GuidedStepFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** A dialog fragment which contains {@link DvrStopSeriesRecordingFragment}. */
 public class DvrStopSeriesRecordingDialogFragment extends DialogFragment {

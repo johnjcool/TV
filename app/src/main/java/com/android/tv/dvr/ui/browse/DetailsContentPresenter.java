@@ -33,7 +33,7 @@ import android.view.ViewTreeObserver;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.ui.ViewUtils;
 import com.android.tv.util.Utils;
 

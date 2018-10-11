@@ -23,7 +23,7 @@ import android.os.Message;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.common.WeakHandler;
 import com.android.tv.data.ChannelImpl;

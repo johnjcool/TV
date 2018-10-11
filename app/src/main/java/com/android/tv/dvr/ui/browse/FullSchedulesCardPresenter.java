@@ -19,7 +19,7 @@ package com.android.tv.dvr.ui.browse;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.dvr.data.ScheduledRecording;
 import com.android.tv.dvr.ui.DvrUiHelper;

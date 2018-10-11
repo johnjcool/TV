@@ -59,7 +59,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import com.android.tv.InputSessionManager;
 import com.android.tv.InputSessionManager.TvViewSession;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvFeatures;
 import com.android.tv.TvSingletons;
 import com.android.tv.analytics.Tracker;

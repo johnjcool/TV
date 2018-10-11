@@ -19,7 +19,7 @@ package com.android.tv.dvr.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v17.leanback.app.GuidedStepFragment;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.Starter;
 
 /** Activity to show details view in DVR. */

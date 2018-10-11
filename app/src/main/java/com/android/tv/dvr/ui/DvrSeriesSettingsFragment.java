@@ -26,7 +26,7 @@ import android.support.v17.leanback.widget.GuidanceStylist.Guidance;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.support.v17.leanback.widget.GuidedActionsStylist;
 import android.util.LongSparseArray;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.data.ChannelDataManager;
 import com.android.tv.data.ChannelImpl;

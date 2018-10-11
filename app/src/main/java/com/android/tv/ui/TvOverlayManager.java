@@ -36,7 +36,7 @@ import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeL
 import com.android.tv.ChannelTuner;
 import com.android.tv.MainActivity;
 import com.android.tv.MainActivity.KeyHandlerResultType;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TimeShiftManager;
 import com.android.tv.TvOptionsManager;
 import com.android.tv.TvSingletons;

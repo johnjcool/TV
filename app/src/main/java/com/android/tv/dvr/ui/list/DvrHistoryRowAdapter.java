@@ -24,7 +24,7 @@ import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.ClassPresenterSelector;
 import android.text.format.DateUtils;
 import android.util.Log;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.common.util.Clock;

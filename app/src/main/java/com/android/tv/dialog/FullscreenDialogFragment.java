@@ -24,7 +24,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** Dialog fragment with full screen. */
 public class FullscreenDialogFragment extends SafeDismissDialogFragment {

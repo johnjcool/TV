@@ -27,7 +27,7 @@ import android.support.v17.leanback.widget.HorizontalGridView;
 import android.util.Log;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
 import com.android.tv.ChannelTuner;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvOptionsManager;
 import com.android.tv.TvSingletons;
 import com.android.tv.analytics.Tracker;

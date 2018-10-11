@@ -27,7 +27,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.dialog.FullscreenDialogFragment;
 
 public class FullscreenDialogView extends FrameLayout

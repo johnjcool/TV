@@ -17,7 +17,7 @@
 package com.android.tv.menu;
 
 import android.support.annotation.NonNull;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.data.api.Channel;
 
 /** A class for the items in channels row. */

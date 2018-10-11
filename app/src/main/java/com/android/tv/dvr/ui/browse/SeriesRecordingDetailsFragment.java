@@ -32,7 +32,7 @@ import android.support.v17.leanback.widget.OnActionClickedListener;
 import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
 import android.text.TextUtils;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.data.BaseProgram;
 import com.android.tv.dvr.DvrDataManager;

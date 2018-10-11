@@ -162,7 +162,7 @@ public class DvrDatabaseHelper extends SQLiteOpenHelper {
                 new ColumnInfo(Schedules.COLUMN_PROGRAM_POST_ART_URI, SQL_DATA_TYPE_STRING),
                 new ColumnInfo(Schedules.COLUMN_PROGRAM_THUMBNAIL_URI, SQL_DATA_TYPE_STRING),
                 new ColumnInfo(Schedules.COLUMN_STATE, SQL_DATA_TYPE_STRING),
-                new ColumnInfo(Schedules.COLUMN_FAILED_REASON, SQL_DATA_TYPE_STRING),
+                //new ColumnInfo(Schedules.COLUMN_FAILED_REASON, SQL_DATA_TYPE_STRING),
                 new ColumnInfo(Schedules.COLUMN_SERIES_RECORDING_ID, SQL_DATA_TYPE_LONG)
             };
 

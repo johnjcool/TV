@@ -20,7 +20,7 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.common.customization.CustomAction;
 import com.android.tv.common.customization.CustomizationManager;
 import com.android.tv.ui.TunableTvView;

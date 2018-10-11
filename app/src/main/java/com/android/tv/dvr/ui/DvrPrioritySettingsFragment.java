@@ -28,7 +28,7 @@ import android.support.v17.leanback.widget.GuidedActionsStylist;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.dvr.DvrDataManager;
 import com.android.tv.dvr.DvrManager;

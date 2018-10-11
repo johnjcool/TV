@@ -28,7 +28,7 @@ import android.text.format.DateUtils;
 import android.util.ArraySet;
 import android.util.Log;
 
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.dvr.DvrManager;

@@ -45,7 +45,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.Starter;
 import com.android.tv.TvApplication;
 import com.android.tv.TvSingletons;

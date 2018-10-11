@@ -23,7 +23,7 @@ import android.os.Build;
 import android.support.v17.leanback.widget.ClassPresenterSelector;
 import android.util.ArrayMap;
 import android.util.Log;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.data.Program;

@@ -28,7 +28,7 @@ import android.transition.TransitionValues;
 import android.transition.Visibility;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** This transition fades in/out of the background of the view by changing the background color. */
 public class FadeBackground extends Transition {

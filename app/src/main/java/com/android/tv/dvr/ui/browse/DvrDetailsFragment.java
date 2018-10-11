@@ -36,7 +36,7 @@ import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
 import android.support.v17.leanback.widget.VerticalGridView;
 import android.text.TextUtils;
 import android.widget.Toast;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.common.util.CommonUtils;

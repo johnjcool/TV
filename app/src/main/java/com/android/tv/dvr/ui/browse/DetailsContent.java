@@ -20,7 +20,7 @@ import android.content.Context;
 import android.media.tv.TvContract;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.data.api.Channel;
 import com.android.tv.dvr.data.RecordedProgram;

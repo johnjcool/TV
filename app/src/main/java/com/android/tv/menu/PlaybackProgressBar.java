@@ -24,7 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.view.View;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** A progress bar control which has two progresses which start in the middle of the control. */
 public class PlaybackProgressBar extends View {

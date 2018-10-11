@@ -40,7 +40,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.common.util.Clock;

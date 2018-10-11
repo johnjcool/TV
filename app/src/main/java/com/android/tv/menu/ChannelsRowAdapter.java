@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.tv.TvInputInfo;
 import android.view.View;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.analytics.Tracker;
 import com.android.tv.common.feature.CommonFeatures;

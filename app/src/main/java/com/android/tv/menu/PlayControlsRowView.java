@@ -25,7 +25,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TimeShiftManager;
 import com.android.tv.TimeShiftManager.TimeShiftActionId;
 import com.android.tv.TvSingletons;

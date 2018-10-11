@@ -27,6 +27,7 @@ import com.android.tv.data.ChannelImpl;
 import com.android.tv.ui.SelectInputView;
 import com.android.tv.ui.SelectInputView.OnInputSelectedCallback;
 import com.android.tv.util.Utils;
+import com.google.android.tv.R;
 
 /** An activity to select input. */
 public class SelectInputActivity extends Activity {

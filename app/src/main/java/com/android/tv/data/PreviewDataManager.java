@@ -35,7 +35,7 @@ import android.support.media.tv.ChannelLogoUtils;
 import android.support.media.tv.PreviewProgram;
 import android.util.Log;
 import android.util.Pair;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.common.util.PermissionUtils;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

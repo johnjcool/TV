@@ -24,7 +24,7 @@ import android.media.tv.TvInputInfo;
 import android.view.View;
 import android.widget.Toast;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvApplication;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.CommonPreferences;

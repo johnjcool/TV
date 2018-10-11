@@ -25,7 +25,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.common.experiments.Experiments;
 import com.android.tv.dialog.WebDialogFragment;
 import com.android.tv.license.LicenseUtils;

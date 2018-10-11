@@ -35,6 +35,7 @@ import com.android.tv.data.Program;
 import com.android.tv.data.api.Channel;
 import com.android.tv.util.Utils;
 import com.android.tv.util.images.ImageLoader;
+import com.google.android.tv.R;
 
 /**
  * A wrapper class for {@link MediaSession} to support common operations on media sessions for

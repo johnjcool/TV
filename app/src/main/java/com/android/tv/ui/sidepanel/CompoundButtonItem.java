@@ -19,7 +19,7 @@ package com.android.tv.ui.sidepanel;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 public abstract class CompoundButtonItem extends Item {
     private static int sDefaultMaxLine = 0;

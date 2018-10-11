@@ -29,7 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.ui.TunableTvView.BlockScreenType;
 
 public class BlockScreenView extends FrameLayout {

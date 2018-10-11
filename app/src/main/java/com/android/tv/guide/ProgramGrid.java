@@ -25,7 +25,7 @@ import android.util.Log;
 import android.util.Range;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.ui.OnRepeatedKeyInterceptListener;
 import java.util.concurrent.TimeUnit;
 

@@ -22,7 +22,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.menu.Menu;
 
 public class IntroView extends FullscreenDialogView {

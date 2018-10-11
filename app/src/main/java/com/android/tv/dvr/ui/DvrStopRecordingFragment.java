@@ -25,7 +25,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v17.leanback.widget.GuidanceStylist.Guidance;
 import android.support.v17.leanback.widget.GuidedAction;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.dvr.DvrDataManager;
 import com.android.tv.dvr.DvrDataManager.ScheduledRecordingListener;

@@ -20,7 +20,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.Starter;
 import com.android.tv.data.Program;
 import com.android.tv.dvr.data.SeriesRecording;

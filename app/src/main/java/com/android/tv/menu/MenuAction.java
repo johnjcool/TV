@@ -19,7 +19,7 @@ package com.android.tv.menu;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvOptionsManager;
 import com.android.tv.TvOptionsManager.OptionType;
 

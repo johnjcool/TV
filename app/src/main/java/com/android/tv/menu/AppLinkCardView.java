@@ -34,7 +34,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.data.api.Channel;
 import com.android.tv.util.TvInputManagerHelper;
 import com.android.tv.util.images.BitmapUtils;

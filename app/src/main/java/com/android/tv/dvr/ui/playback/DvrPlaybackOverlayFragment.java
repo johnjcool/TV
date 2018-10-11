@@ -42,7 +42,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.data.BaseProgram;
 import com.android.tv.dialog.PinDialogFragment;

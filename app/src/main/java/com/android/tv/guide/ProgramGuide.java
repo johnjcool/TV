@@ -46,7 +46,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
 import com.android.tv.ChannelTuner;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvFeatures;
 import com.android.tv.analytics.Tracker;
 import com.android.tv.common.WeakHandler;

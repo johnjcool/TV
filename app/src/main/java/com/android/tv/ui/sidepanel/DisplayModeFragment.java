@@ -17,7 +17,7 @@
 package com.android.tv.ui.sidepanel;
 
 import android.content.Context;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.data.DisplayMode;
 import com.android.tv.ui.TvViewUiManager;
 import java.util.ArrayList;

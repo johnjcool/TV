@@ -23,7 +23,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.Starter;
 import com.android.tv.dialog.PinDialogFragment.OnPinCheckedListener;
 import com.android.tv.dvr.data.RecordedProgram;

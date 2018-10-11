@@ -18,7 +18,7 @@ package com.android.tv.ui.sidepanel.parentalcontrols;
 
 import android.os.Bundle;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.parental.ContentRatingSystem;
 import com.android.tv.parental.ContentRatingsManager;
 import com.android.tv.parental.ParentalControlSettings;

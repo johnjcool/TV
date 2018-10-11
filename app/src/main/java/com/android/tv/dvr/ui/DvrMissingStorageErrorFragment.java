@@ -24,7 +24,7 @@ import android.provider.Settings;
 import android.support.v17.leanback.widget.GuidanceStylist.Guidance;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.util.Log;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.dvr.ui.browse.DvrDetailsActivity;
 import java.util.List;
 

@@ -18,7 +18,7 @@ package com.android.tv.dvr.ui.browse;
 
 import android.content.Context;
 import android.media.tv.TvInputManager;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.dvr.DvrWatchedPositionManager;
 import com.android.tv.dvr.DvrWatchedPositionManager.WatchedPositionChangedListener;

@@ -139,6 +139,7 @@ import com.android.tv.util.Utils;
 import com.android.tv.util.ViewCache;
 import com.android.tv.util.account.AccountHelper;
 import com.android.tv.util.images.ImageCache;
+import com.google.android.tv.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -25,7 +25,7 @@ import android.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.ui.hideable.AutoHideScheduler;
 
 /** Manages {@link SideFragment}s. */

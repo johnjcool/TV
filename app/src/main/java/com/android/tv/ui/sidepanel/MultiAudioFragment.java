@@ -19,7 +19,7 @@ package com.android.tv.ui.sidepanel;
 import android.media.tv.TvTrackInfo;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.util.Utils;
 import java.util.ArrayList;
 import java.util.List;

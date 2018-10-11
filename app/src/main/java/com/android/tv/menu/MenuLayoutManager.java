@@ -34,7 +34,7 @@ import android.util.Property;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.util.Utils;
 import java.util.ArrayList;

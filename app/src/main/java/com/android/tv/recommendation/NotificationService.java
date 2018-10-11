@@ -41,7 +41,7 @@ import android.util.Log;
 import android.util.SparseLongArray;
 import android.view.View;
 import com.android.tv.MainActivityWrapper.OnCurrentChannelChangeListener;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.Starter;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.CommonConstants;

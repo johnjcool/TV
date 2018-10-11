@@ -26,7 +26,7 @@ import android.media.tv.TvInputInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.SetupPassthroughActivity;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.ui.setup.SetupActivity;

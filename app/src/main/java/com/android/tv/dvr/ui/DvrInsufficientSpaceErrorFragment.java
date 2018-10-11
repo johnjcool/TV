@@ -22,7 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.GuidanceStylist.Guidance;
 import android.support.v17.leanback.widget.GuidedAction;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.dvr.ui.browse.DvrBrowseActivity;

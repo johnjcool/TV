@@ -26,7 +26,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import java.util.Map;
 
 /**

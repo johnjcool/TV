@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.data.Program;
 import com.android.tv.data.api.Channel;
 import com.android.tv.parental.ParentalControlSettings;

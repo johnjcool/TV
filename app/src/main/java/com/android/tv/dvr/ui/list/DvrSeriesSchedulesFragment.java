@@ -30,7 +30,7 @@ import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.data.ChannelDataManager;
 import com.android.tv.data.Program;

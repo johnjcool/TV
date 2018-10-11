@@ -17,7 +17,7 @@
 package com.android.tv.data;
 
 import android.content.Context;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 public class DisplayMode {
 

@@ -27,7 +27,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Range;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.common.util.CommonUtils;
@@ -405,7 +405,7 @@ public final class ScheduledRecording implements Parcelable {
         Schedules.COLUMN_PROGRAM_POST_ART_URI,
         Schedules.COLUMN_PROGRAM_THUMBNAIL_URI,
         Schedules.COLUMN_STATE,
-        Schedules.COLUMN_FAILED_REASON,
+        //Schedules.COLUMN_FAILED_REASON,
         Schedules.COLUMN_SERIES_RECORDING_ID
     };
 

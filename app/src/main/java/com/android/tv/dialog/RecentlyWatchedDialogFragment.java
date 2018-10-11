@@ -30,7 +30,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.data.ChannelDataManager;
 import com.android.tv.data.api.Channel;
 

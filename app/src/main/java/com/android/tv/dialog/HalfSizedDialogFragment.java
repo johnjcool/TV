@@ -24,7 +24,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import java.util.concurrent.TimeUnit;
 
 public class HalfSizedDialogFragment extends SafeDismissDialogFragment {

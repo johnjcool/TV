@@ -31,7 +31,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.dvr.data.RecordedProgram;
 import com.android.tv.ui.ViewUtils;
 import com.android.tv.util.images.ImageLoader;

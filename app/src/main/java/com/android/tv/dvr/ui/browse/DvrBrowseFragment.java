@@ -32,7 +32,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalFocusChangeListener;
 
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvFeatures;
 import com.android.tv.TvSingletons;
 import com.android.tv.data.GenreItems;

@@ -17,7 +17,7 @@
 package com.android.tv.ui.sidepanel.parentalcontrols;
 
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.ui.sidepanel.Item;
 import com.android.tv.ui.sidepanel.SideFragment;
 import com.android.tv.ui.sidepanel.SubMenuItem;

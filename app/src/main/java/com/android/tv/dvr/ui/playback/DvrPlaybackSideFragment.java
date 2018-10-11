@@ -26,7 +26,7 @@ import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.util.TvSettings;
 import java.util.List;
 import java.util.Locale;

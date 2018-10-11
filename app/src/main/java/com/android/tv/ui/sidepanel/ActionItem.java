@@ -18,7 +18,7 @@ package com.android.tv.ui.sidepanel;
 
 import android.view.View;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 public abstract class ActionItem extends Item {
     private final String mTitle;

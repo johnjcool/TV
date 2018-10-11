@@ -20,7 +20,7 @@ import android.content.Context;
 import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.support.v17.leanback.widget.GuidedActionsStylist;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** Extended stylist class used for {@link GuidedStepFragment} with divider support. */
 public class GuidedActionsStylistWithDivider extends GuidedActionsStylist {

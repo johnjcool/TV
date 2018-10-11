@@ -17,7 +17,7 @@
 package com.android.tv.dvr.ui.playback;
 
 import android.content.Context;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.dvr.ui.browse.RecordedProgramPresenter;
 import com.android.tv.dvr.ui.browse.RecordingCardView;
 

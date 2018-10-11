@@ -38,7 +38,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.common.ui.setup.SetupActionHelper;
 import com.android.tv.common.ui.setup.animation.SetupAnimationHelper;
 import java.util.ArrayList;

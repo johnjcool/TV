@@ -38,7 +38,7 @@ import android.text.style.TextAppearanceSpan;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.android.tv.MainActivity;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.BuildConfig;
 import com.android.tv.common.SoftPreconditions;

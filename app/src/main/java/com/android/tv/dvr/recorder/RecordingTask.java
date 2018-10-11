@@ -33,7 +33,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.android.tv.InputSessionManager;
 import com.android.tv.InputSessionManager.RecordingSession;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;
 import com.android.tv.common.util.Clock;

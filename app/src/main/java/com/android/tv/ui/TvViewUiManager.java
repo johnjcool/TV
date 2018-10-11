@@ -42,7 +42,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvFeatures;
 import com.android.tv.TvOptionsManager;
 import com.android.tv.data.DisplayMode;

@@ -30,7 +30,7 @@ import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.util.ArraySet;
 import android.util.Log;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.common.concurrent.NamedThreadFactory;
 import com.android.tv.util.images.BitmapUtils.ScaledBitmapInfo;
 import java.lang.ref.WeakReference;

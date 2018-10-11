@@ -16,23 +16,13 @@
 
 package com.android.tv.common;
 
-import android.os.Build;
-import android.util.Log;
-
 /** Constants for common use in apps and tests. */
 public final class CommonConstants {
 
-    public static final String BASE_PACKAGE = isAOSP() ? "com.android.tv" :
-                    "com.google.android.tv";
+    public static final String BASE_PACKAGE =
+                    "com.android.tv";
     /** A constant for the key of the extra data for the app linking intent. */
     public static final String EXTRA_APP_LINK_CHANNEL_URI = "app_link_channel_uri";
 
     private CommonConstants() {}
-
-
-    public static boolean isAOSP() {
-        Log.d(CommonConstants.class.getSimpleName(), "isAOSP" + Build.HOST);
-        return Build.HOST.endsWith(".google.com");
-    }
-
 }

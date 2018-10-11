@@ -24,7 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** Stylist class used for DVR settings {@link GuidedStepFragment}. */
 public class DvrGuidedActionsStylist extends GuidedActionsStylist {

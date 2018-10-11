@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** A base class to render a card. */
 public abstract class BaseCardView<T> extends LinearLayout implements ItemListRowView.CardView<T> {

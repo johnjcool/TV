@@ -20,7 +20,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.media.tv.TvContentRating;
 import android.text.TextUtils;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

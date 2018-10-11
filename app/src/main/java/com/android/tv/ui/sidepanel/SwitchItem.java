@@ -16,7 +16,7 @@
 
 package com.android.tv.ui.sidepanel;
 
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 public class SwitchItem extends CompoundButtonItem {
     public SwitchItem(String title) {

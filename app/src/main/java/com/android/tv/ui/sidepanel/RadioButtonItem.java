@@ -16,7 +16,7 @@
 
 package com.android.tv.ui.sidepanel;
 
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 public class RadioButtonItem extends CompoundButtonItem {
     public RadioButtonItem(String title) {

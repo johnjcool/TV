@@ -27,7 +27,7 @@ import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvSingletons;
 import com.android.tv.dvr.data.SeriesRecording;
 import com.android.tv.dvr.ui.DvrUiHelper;

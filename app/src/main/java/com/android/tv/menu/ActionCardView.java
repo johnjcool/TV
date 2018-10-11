@@ -22,7 +22,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 
 /** A view to render an item of TV options. */
 public class ActionCardView extends RelativeLayout implements ItemListRowView.CardView<MenuAction> {

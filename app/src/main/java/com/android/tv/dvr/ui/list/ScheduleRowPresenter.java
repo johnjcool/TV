@@ -36,7 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.TvFeatures;
 import com.android.tv.TvSingletons;
 import com.android.tv.common.SoftPreconditions;

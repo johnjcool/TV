@@ -21,7 +21,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import com.android.tv.R;
+import com.google.android.tv.R;
 import com.android.tv.parental.ContentRatingSystem;
 import com.android.tv.parental.ContentRatingSystem.Rating;
 import com.android.tv.parental.ContentRatingSystem.SubRating;
