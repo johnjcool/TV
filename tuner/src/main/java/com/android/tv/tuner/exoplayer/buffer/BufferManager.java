@@ -291,7 +291,7 @@ public class BufferManager {
         private long mSize;
 
         private void init(String key) {
-            mEvictMap.put(key, new LinkedList<SampleChunk>());
+            mEvictMap.put(key, new LinkedList<>());
         }
 
         private void add(String key, SampleChunk chunk) {

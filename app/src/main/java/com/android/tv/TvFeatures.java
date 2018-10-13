@@ -16,28 +16,26 @@
 
 package com.android.tv;
 
-import static com.android.tv.common.feature.EngOnlyFeature.ENG_ONLY_FEATURE;
-import static com.android.tv.common.feature.FeatureUtils.AND;
-import static com.android.tv.common.feature.FeatureUtils.OFF;
-import static com.android.tv.common.feature.FeatureUtils.ON;
-import static com.android.tv.common.feature.FeatureUtils.OR;
-
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.VisibleForTesting;
+
 import com.android.tv.common.experiments.Experiments;
 import com.android.tv.common.feature.CommonFeatures;
 import com.android.tv.common.feature.ExperimentFeature;
 import com.android.tv.common.feature.Feature;
-import com.android.tv.common.feature.FeatureUtils;
 import com.android.tv.common.feature.GServiceFeature;
 import com.android.tv.common.feature.PropertyFeature;
-import com.android.tv.common.feature.Sdk;
-import com.android.tv.common.feature.TestableFeature;
 import com.android.tv.common.util.PermissionUtils;
 
-import com.google.android.tv.partner.support.PartnerCustomizations;
+import static com.android.tv.common.feature.EngOnlyFeature.ENG_ONLY_FEATURE;
+import static com.android.tv.common.feature.FeatureUtils.OFF;
+import static com.android.tv.common.feature.FeatureUtils.ON;
+import static com.android.tv.common.feature.FeatureUtils.and;
+import static com.android.tv.common.feature.FeatureUtils.aospFeature;
+import static com.android.tv.common.feature.FeatureUtils.or;
+
 
 /**
  * List of {@link Feature} for the Live TV App.
@@ -46,25 +44,31 @@ import com.google.android.tv.partner.support.PartnerCustomizations;
  */
 public final class TvFeatures extends CommonFeatures {
 
+    /** When enabled store network affiliation information to TV provider */
+    public static final Feature STORE_NETWORK_AFFILIATION = ENG_ONLY_FEATURE;
+
     /** When enabled use system setting for turning on analytics. */
     public static final Feature ANALYTICS_OPT_IN =
             ExperimentFeature.from(Experiments.ENABLE_ANALYTICS_VIA_CHECKBOX);
-    /** When enabled shows a list of failed recordings */
-    public static final Feature DVR_FAILED_LIST = ENG_ONLY_FEATURE;
     /**
      * Analytics that include sensitive information such as channel or program identifiers.
      *
      * <p>See <a href="http://b/22062676">b/22062676</a>
      */
-    public static final Feature ANALYTICS_V2 = AND(ON, ANALYTICS_OPT_IN);
+    public static final Feature ANALYTICS_V2 = and(ON, ANALYTICS_OPT_IN);
 
-    public static final Feature EPG_SEARCH =
-            PropertyFeature.create("feature_tv_use_epg_search", false);
+    /** Enables Embedded tuner */
+    public static final Feature TUNER =
+            aospFeature(
+                    OFF);
+
+    // TODO(b/76149661): Fix EPG search or remove it
+    public static final Feature EPG_SEARCH = OFF;
 
     private static final String GSERVICE_KEY_UNHIDE = "live_channels_unhide";
     /** A flag which indicates that LC app is unhidden even when there is no input. */
     public static final Feature UNHIDE =
-            OR(
+            or(
                     new GServiceFeature(GSERVICE_KEY_UNHIDE, false),
                     new Feature() {
                         @Override

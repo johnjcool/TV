@@ -548,8 +548,10 @@ public class EpgFetcherImpl implements EpgFetcher {
                                     null,
                                     null,
                                     null)) {
-                while (cursor.moveToNext()) {
-                    result.add(ChannelImpl.fromCursor(cursor));
+                if (cursor != null) {
+                    while (cursor.moveToNext()) {
+                        result.add(ChannelImpl.fromCursor(cursor));
+                    }
                 }
                 return result;
             }
@@ -606,19 +608,16 @@ public class EpgFetcherImpl implements EpgFetcher {
                 Log.i(TAG, "Failed to get EPG channels for " + lineupId);
                 return REASON_NO_EPG_DATA_RETURNED;
             }
+            EpgFetchHelper.updateNetworkAffiliation(mContext, channels);
             if (mClock.currentTimeMillis() - EpgFetchHelper.getLastEpgUpdatedTimestamp(mContext)
                     > mEpgDataExpiredTimeLimitMs) {
                 batchFetchEpg(channels, mFastFetchDurationSec);
             }
             new Handler(mContext.getMainLooper())
                     .post(
-                            new Runnable() {
-                                @Override
-                                public void run() {
+                            () ->
                                     ChannelLogoFetcher.startFetchingChannelLogos(
-                                            mContext, asChannelList(channels));
-                                }
-                            });
+                                            mContext, asChannelList(channels)));
             for (EpgReader.EpgChannel epgChannel : channels) {
                 if (this.isCancelled()) {
                     return null;
@@ -780,6 +779,9 @@ public class EpgFetcherImpl implements EpgFetcher {
                     mFetchedChannelIdsDuringScan.add(epgChannel.getChannel().getId());
                 }
             }
+            if (!newChannels.isEmpty()) {
+                EpgFetchHelper.updateNetworkAffiliation(mContext, newChannels);
+            }
             batchFetchEpg(newChannels, FETCH_DURING_SCAN_DURATION_SEC);
         }
 
@@ -798,14 +800,7 @@ public class EpgFetcherImpl implements EpgFetcher {
             // Clear timestamp to make routine service start right away.
             EpgFetchHelper.setLastEpgUpdatedTimestamp(mContext, 0);
             Log.i(TAG, "EPG Fetching during channel scanning finished.");
-            new Handler(Looper.getMainLooper())
-                    .post(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    fetchImmediately();
-                                }
-                            });
+            new Handler(Looper.getMainLooper()).post(EpgFetcherImpl.this::fetchImmediately);
         }
     }
 }

@@ -18,8 +18,8 @@ package com.android.tv.dvr.ui.list;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.android.tv.Starter;
 import com.google.android.tv.R;
+import com.android.tv.Starter;
 
 /** Activity to show the recording history. */
 public class DvrHistoryActivity extends Activity {

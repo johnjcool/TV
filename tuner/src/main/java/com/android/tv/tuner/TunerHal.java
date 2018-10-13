@@ -23,6 +23,7 @@ import android.support.annotation.WorkerThread;
 import android.util.Log;
 import android.util.Pair;
 import com.android.tv.common.BuildConfig;
+import com.android.tv.common.compat.TvInputConstantCompat;
 import com.android.tv.common.customization.CustomizationManager;
 
 
@@ -293,6 +294,8 @@ public abstract class TunerHal implements AutoCloseable {
 
     protected native int nativeGetDeliverySystemType(long deviceId);
 
+    protected native int nativeGetSignalStrength(long deviceId);
+
     /**
      * Stops current tuning. The tuner device and pid filters will be reset by this call and make
      * the tuner ready to accept another tune request.
@@ -336,6 +339,20 @@ public abstract class TunerHal implements AutoCloseable {
         } else {
             return 0;
         }
+    }
+
+    /**
+     * This method gets signal strength for currently tuned channel.
+     * Each specific tuner should implement its own method.
+     *
+     * @return {@link TvInputConstantCompat#SIGNAL_STRENGTH_NOT_USED
+     *          when signal check is not supported from tuner.
+     *          {@link TvInputConstantCompat#SIGNAL_STRENGTH_ERROR}
+     *          when signal returned is not valid.
+     *          0 - 100 representing strength from low to high. Curve raw data if necessary.
+     */
+    public int getSignalStrength() {
+        return TvInputConstantCompat.SIGNAL_STRENGTH_NOT_USED;
     }
 
     protected native int nativeWriteInBuffer(long deviceId, byte[] javaBuffer, int javaBufferSize);

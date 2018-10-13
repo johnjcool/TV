@@ -26,6 +26,8 @@ import android.media.tv.TvContract.RecordedPrograms;
 import android.media.tv.TvInputManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -56,9 +58,13 @@ import java.io.IOException;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /** Implements a DVR feature. */
@@ -87,6 +93,11 @@ public class TunerRecordingSessionWorker
     private static final int MSG_MONITOR_STORAGE_STATUS = 5;
     private static final int MSG_RELEASE = 6;
     private static final int MSG_UPDATE_CC_INFO = 7;
+    private static final String COLUMN_SERIES_ID = "series_id";
+
+    private boolean mProgramHasSeriesIdColumn;
+    private boolean mRecordedProgramHasSeriesIdColumn;
+
     private final RecordingCapability mCapabilities;
 
     private static final String[] PROGRAM_PROJECTION = {
@@ -107,6 +118,9 @@ public class TunerRecordingSessionWorker
         TvContract.Programs.COLUMN_VIDEO_HEIGHT,
         TvContract.Programs.COLUMN_INTERNAL_PROVIDER_DATA
     };
+
+    private static final String[] PROGRAM_PROJECTION_WITH_SERIES_ID =
+            createProjectionWithSeriesId();
 
     @IntDef({STATE_IDLE, STATE_TUNING, STATE_TUNED, STATE_RECORDING})
     @Retention(RetentionPolicy.SOURCE)
@@ -138,6 +152,7 @@ public class TunerRecordingSessionWorker
     @DvrSessionState private int mSessionState = STATE_IDLE;
     private final String mInputId;
     private Uri mProgramUri;
+    private String mSeriesId;
 
     private PsipData.EitItem mCurrenProgram;
     private List<AtscCaptionTrack> mCaptionTracks;
@@ -485,9 +500,15 @@ public class TunerRecordingSessionWorker
             long avg = mRecordStartTime / 2 + mRecordEndTime / 2;
             programUri = TvContract.buildProgramsUriForChannel(mChannel.getChannelId(), avg, avg);
         }
-        try (Cursor c = resolver.query(programUri, PROGRAM_PROJECTION, null, null, SORT_BY_TIME)) {
+        String[] projection =
+                checkProgramTable() ? PROGRAM_PROJECTION_WITH_SERIES_ID : PROGRAM_PROJECTION;
+        try (Cursor c = resolver.query(programUri, projection, null, null, SORT_BY_TIME)) {
             if (c != null && c.moveToNext()) {
                 Program result = Program.fromCursor(c);
+                int index;
+                if ((index = c.getColumnIndex(COLUMN_SERIES_ID)) >= 0 && !c.isNull(index)) {
+                    mSeriesId = c.getString(index);
+                }
                 if (DEBUG) {
                     Log.v(TAG, "Finished query for " + this);
                 }
@@ -519,6 +540,9 @@ public class TunerRecordingSessionWorker
         // startTime and endTime could be overridden by program's start and end value.
         values.put(RecordedPrograms.COLUMN_START_TIME_UTC_MILLIS, startTime);
         values.put(RecordedPrograms.COLUMN_END_TIME_UTC_MILLIS, endTime);
+        if (checkRecordedProgramTable()) {
+            values.put(COLUMN_SERIES_ID, mSeriesId);
+        }
         if (program != null) {
             values.putAll(program.toContentValues());
         }
@@ -567,6 +591,81 @@ public class TunerRecordingSessionWorker
         mSession.onRecordFinished(uri);
     }
 
+    private boolean checkProgramTable() {
+        boolean canCreateColumn = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
+        if (!canCreateColumn) {
+            return false;
+        }
+        Uri uri = TvContract.Programs.CONTENT_URI;
+        if (!mProgramHasSeriesIdColumn) {
+            if (getExistingColumns(uri).contains(COLUMN_SERIES_ID)) {
+                mProgramHasSeriesIdColumn = true;
+            } else if (addColumnToTable(uri)) {
+                mProgramHasSeriesIdColumn = true;
+            }
+        }
+        return mProgramHasSeriesIdColumn;
+    }
+
+    private boolean checkRecordedProgramTable() {
+        boolean canCreateColumn = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
+        if (!canCreateColumn) {
+            return false;
+        }
+        Uri uri = TvContract.RecordedPrograms.CONTENT_URI;
+        if (!mRecordedProgramHasSeriesIdColumn) {
+            if (getExistingColumns(uri).contains(COLUMN_SERIES_ID)) {
+                mRecordedProgramHasSeriesIdColumn = true;
+            } else if (addColumnToTable(uri)) {
+                mRecordedProgramHasSeriesIdColumn = true;
+            }
+        }
+        return mRecordedProgramHasSeriesIdColumn;
+    }
+
+    private Set<String> getExistingColumns(Uri uri) {
+        Bundle result =
+                mContext.getContentResolver()
+                        .call(uri, TvContract.METHOD_GET_COLUMNS, uri.toString(), null);
+        if (result != null) {
+            String[] columns = result.getStringArray(TvContract.EXTRA_EXISTING_COLUMN_NAMES);
+            if (columns != null) {
+                return new HashSet<>(Arrays.asList(columns));
+            }
+        }
+        Log.e(TAG, "Query existing column names from " + uri + " returned null");
+        return Collections.emptySet();
+    }
+
+    /**
+     * Add a column to the table
+     *
+     * @return {@code true} if the column is added successfully; {@code false} otherwise.
+     */
+    private boolean addColumnToTable(Uri contentUri) {
+        Bundle extra = new Bundle();
+        extra.putCharSequence(TvContract.EXTRA_COLUMN_NAME, COLUMN_SERIES_ID);
+        extra.putCharSequence(TvContract.EXTRA_DATA_TYPE, "TEXT");
+        // If the add operation fails, the following just returns null without crashing.
+        Bundle allColumns =
+                mContext.getContentResolver()
+                        .call(
+                                contentUri,
+                                TvContract.METHOD_ADD_COLUMN,
+                                contentUri.toString(),
+                                extra);
+        if (allColumns == null) {
+            Log.w(TAG, "Adding new column failed. Uri=" + contentUri);
+        }
+        return allColumns != null;
+    }
+
+    private static String[] createProjectionWithSeriesId() {
+        List<String> projectionList = new ArrayList<>(Arrays.asList(PROGRAM_PROJECTION));
+        projectionList.add(COLUMN_SERIES_ID);
+        return projectionList.toArray(new String[0]);
+    }
+
     private static class DeleteRecordingTask extends AsyncTask<File, Void, Void> {
 
         @Override
@@ -575,7 +674,9 @@ public class TunerRecordingSessionWorker
                 return null;
             }
             for (File file : files) {
-                CommonUtils.deleteDirOrFile(file);
+                if (!CommonUtils.deleteDirOrFile(file)) {
+                    Log.w(TAG, "Unable to delete recording data at " + file);
+                }
             }
             return null;
         }

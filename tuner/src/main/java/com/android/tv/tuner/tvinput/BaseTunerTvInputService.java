@@ -39,7 +39,7 @@ public class BaseTunerTvInputService extends TvInputService
     private static final int DVR_STORAGE_CLEANUP_JOB_ID = 100;
 
     // WeakContainer for {@link TvInputSessionImpl}
-    private final Set<TunerSession> mTunerSessions = Collections.newSetFromMap(new WeakHashMap<TunerSession, Boolean>());
+    private final Set<TunerSession> mTunerSessions = Collections.newSetFromMap(new WeakHashMap<>());
     private ChannelDataManager mChannelDataManager;
     private AudioCapabilitiesReceiver mAudioCapabilitiesReceiver;
     private AudioCapabilities mAudioCapabilities;

@@ -23,6 +23,7 @@ import android.media.tv.TvInputInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
+
 import com.android.tv.data.ChannelImpl;
 import com.android.tv.ui.SelectInputView;
 import com.android.tv.ui.SelectInputView.OnInputSelectedCallback;
